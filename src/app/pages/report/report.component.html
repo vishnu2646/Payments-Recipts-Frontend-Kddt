@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="title" style="font-size:40px;">Krishnagiri Dristict Deaf Trust</div>
+    <div class="address">KDDA Auditorium 29/1,2 Titan Township H.C.F Post, Mathigiri,Hosur-635110</div>
+    <br>
+
+    <div class="topic">Payments and Receipts Accounts {{ reportData.date | date: 'dd/MM/YYYY - hh:mm a' }}</div>
+    <div class="table1 mt-4" width="100%" style="display: flex; justify-content: space-between;">
+        <table width="45%" style="margin:0 auto;border-collapse: collapse;border: 1px solid black;">
+            <thead>
+                <tr>
+                    <th class="header">Income</th>
+                    <th class="amt">Amounts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row" class="detail">Cash in Hand</th>
+                    <th class="details">{{ reportData.openings[0]?.cashinhand }}</th>
+                </tr>
+
+                <tr>
+                    <th scope="row" class="detail">Cash At Bank</th>
+                    <th class="details">{{ reportData.openings[0]?.cashatbank }}</th>
+                </tr>
+                <tr *ngFor="let res of reportData.result">
+                    <td scope="row" class="detail">{{ res.income_name }}</td>
+                    <td class="details">{{ res.total_amt  }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table width="45%" style="margin:0 auto;border-collapse: collapse; border: 1px solid black;">
+            <thead>
+                <tr>
+                    <th class="header">Expense</th>
+                    <th class="amt">Amounts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let res of reportData.expx">
+                    <td scope="row" class="detail">{{ res.expense_name }}</td>
+                    <td class="details">{{ res.exp_tot }}</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="detail">Closing Balance</th>
+                    <th class="details">{{ reportData.extot }}</th>
+                </tr>
+                <tr>
+                    <th scope="row" class="detail">Cash In Hand</th>
+                    <th class="details">{{ reportData.b }}</th>
+                </tr>
+                <tr>
+                    <th scope="row" class="detail">Cash At Bank 1</th>
+                    <th class="details">{{ reportData.openings[0]?.cashatbankexp }}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container totals mt-5">
+    <h4 class="inctot" style="text-align:right;">Total Income: {{ reportData.fin }}</h4>
+    <h4 class="exptot mr-5">Total Expense: {{ reportData.finexp }}</h4>
+</div>
+<div class="container signature mt-5" style="margin-top:5px;">
+    <p>Sign of Treasurer I</p>
+    <p>Seal of Treasurer II</p>
+</div>

@@ -1,0 +1,167 @@
+<div class="container">
+    <div class="header">
+        <h2>Income / Expense Form</h2>
+        <mat-form-field appearance="outline">
+            <mat-label>Form Type</mat-label>
+            <mat-select [(value)]="selectedType" (selectionChange)="handleFormTypeChange($event)">
+                @for (type of formType; track type) {
+                    <mat-option [value]="type">{{ type }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <section class="form">
+        <ng-container *ngIf="selectedType === 'Income'; else expenseFormTemplate">
+            <h2>Add New Income</h2>
+            <div class="form-fields">
+                <mat-form-field appearance="outline">
+                    <mat-label>Income No</mat-label>
+                    <input matInput type="number" placeholder="Enter Income No" [(ngModel)]="incomeForm.incid">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Income Name</mat-label>
+                    <input type="text"
+                        placeholder="Choose Income Name"
+                        matInput
+                        [matAutocomplete]="auto"
+                        [(ngModel)]="incomeForm.income_name"
+                        (ngModelChange)="handleFilterIncomeNames($event)"
+                        (focus)="handleFilterIncomeNames('')"
+                    >
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        @for (option of filteredOptions; track option) {
+                            <mat-option [value]="option.typename">{{ option.typename }}</mat-option>
+                        }
+                    </mat-autocomplete>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Choose Income date</mat-label>
+                    <input matInput [matDatepicker]="incomeDate" [(ngModel)]="incomeForm.date">
+                    <mat-datepicker-toggle matIconSuffix [for]="incomeDate"></mat-datepicker-toggle>
+                    <mat-datepicker #incomeDate></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Income Mode</mat-label>
+                    <mat-select [(value)]="selectedIncomeMode" (selectionChange)="handleIncomeModeChange($event)">
+                        @for (mode of incomeModes; track mode) {
+                            <mat-option [value]="mode">{{ mode }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Income Amount</mat-label>
+                    <input matInput type="number" placeholder="Enter Income Amount" [(ngModel)]="incomeForm.amount">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Income Reason</mat-label>
+                    <input matInput type="text" placeholder="Enter Income Reason" [(ngModel)]="incomeForm.reason">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Income By</mat-label>
+                    <input matInput type="text" placeholder="Enter Income By" [(ngModel)]="incomeForm.income_by">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Details</mat-label>
+                    <input matInput type="text" placeholder="Enter Details" [(ngModel)]="incomeForm.details">
+                </mat-form-field>
+            </div>
+            <div class="bank-details" *ngIf="isBankDetailsVisible">
+                <h2>Bank Details</h2>
+                <div class="fields">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Bank Name</mat-label>
+                        <input matInput type="text" placeholder="Enter Bank Name" [(ngModel)]="incomeForm.bankname">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cheque or DD Number</mat-label>
+                        <input matInput type="number" placeholder="Enter Cheque or DD No" [(ngModel)]="incomeForm.chequeordd">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose Date in Bank</mat-label>
+                        <input matInput [matDatepicker]="bankDate" [(ngModel)]="incomeForm.dateinbank">
+                        <mat-datepicker-toggle matIconSuffix [for]="bankDate"></mat-datepicker-toggle>
+                        <mat-datepicker #bankDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <button mat-raised-button color="accent" (click)="handleSaveIncome()"> Add Income </button>
+            <button mat-raised-button color="primary" (click)="handleCreateIncomeType()" *ngIf="toggleAddIncomeOption" style="margin-left: 20px;"> Add Income Type </button>
+        </ng-container>
+        <ng-template #expenseFormTemplate>
+            <h2>Add New Expense</h2>
+            <div class="form-fields">
+                <mat-form-field appearance="outline">
+                    <mat-label>Expense No</mat-label>
+                    <input matInput type="number" placeholder="Enter Expense No" [(ngModel)]="expenseForm.expid">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Expense Name</mat-label>
+                    <input type="text"
+                        placeholder="Pick Expense Name"
+                        matInput
+                        [matAutocomplete]="auto"
+                        [(ngModel)]="expenseForm.expense_name"
+                        (ngModelChange)="handleFilterExpenseNames($event)"
+                        (focus)="handleFilterExpenseNames('')"
+                    >
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        @for (option of filteredExpenseNameOptions; track option) {
+                            <mat-option [value]="option.etypename">{{ option.etypename }}</mat-option>
+                        }
+                    </mat-autocomplete>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Choose Expense date</mat-label>
+                    <input matInput [matDatepicker]="expenseDate" [(ngModel)]="expenseForm.date">
+                    <mat-datepicker-toggle matIconSuffix [for]="expenseDate"></mat-datepicker-toggle>
+                    <mat-datepicker #expenseDate></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Expense Mode</mat-label>
+                    <mat-select [(value)]="selectedIncomeMode" (selectionChange)="handleExpenseModeChange($event)">
+                        @for (mode of expenseModes; track mode) {
+                            <mat-option [value]="mode">{{ mode }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Expense Amount</mat-label>
+                    <input matInput type="number" placeholder="Enter Expense Amount" [(ngModel)]="expenseForm.amount">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Expense Reason</mat-label>
+                    <input matInput type="text" placeholder="Enter Expense Reason" [(ngModel)]="expenseForm.reason">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Expense By</mat-label>
+                    <input matInput type="text" placeholder="Enter Expense By" [(ngModel)]="expenseForm.expense_by">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Details</mat-label>
+                    <input matInput type="text" placeholder="Enter Details" [(ngModel)]="expenseForm.details">
+                </mat-form-field>
+            </div>
+            <div class="bank-details" *ngIf="isBankDetailsVisible">
+                <h2>Bank Details</h2>
+                <div class="fields">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Bank Name</mat-label>
+                        <input matInput type="text" placeholder="Enter Bank Name" [(ngModel)]="expenseForm.bankname">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cheque or DD Number</mat-label>
+                        <input matInput type="number" placeholder="Enter Cheque or DD No" [(ngModel)]="expenseForm.chequeordd">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose Date in Bank</mat-label>
+                        <input matInput [matDatepicker]="expenseBankDate" [(ngModel)]="expenseForm.dateinbank">
+                        <mat-datepicker-toggle matIconSuffix [for]="expenseBankDate"></mat-datepicker-toggle>
+                        <mat-datepicker #expenseBankDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <button mat-raised-button color="accent" (click)="handleSaveExpense()"> Add Expense </button>
+            <button mat-raised-button color="primary" (click)="handleCreateExpenseType()" *ngIf="toggleAddExpenseOption" style="margin-left: 20px;"> Add Expense Type </button>
+        </ng-template>
+    </section>
+</div>

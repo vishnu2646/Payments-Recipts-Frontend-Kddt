@@ -1,0 +1,26 @@
+section {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    mat-card {
+        width: 450px;
+        mat-card-header {
+            align-items: center;
+            justify-content: center;
+
+            mat-card-title {
+                h1 {
+                    text-align: center;
+                }
+            }
+        }
+        mat-card-content {
+            mat-form-field {
+                width: 100%;
+            }
+        }
+    }
+}

@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="header">
+        <h2>Opening Information</h2>
+    </div>
+    <section class="form">
+        <h2>Add Opening Information</h2>
+        <div class="form-fields">
+            <mat-form-field appearance="outline">
+                <mat-label>Cash In Hand</mat-label>
+                <input matInput type="number" [(ngModel)]="formData.cashinhand" (ngModelChange)="handleChange($event)" placeholder="Enter Cash In Hand">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Cash at Bank</mat-label>
+                <input matInput type="number" [(ngModel)]="formData.cashatbank" (ngModelChange)="handleChange($event)" placeholder="Enter Amount">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Closing Balance</mat-label>
+                <input matInput type="number" [(ngModel)]="formData.cashatbankexp" (ngModelChange)="handleChange($event)" placeholder="Enter Amount">
+            </mat-form-field>
+        </div>
+    </section>
+    <ng-container *ngIf="isEditMode; else createBtn">
+        <button mat-raised-button color="primary" (click)="handleUpdateOpening()">Update</button>
+    </ng-container>
+    <ng-template #createBtn>
+        <button mat-raised-button color="accent" [disabled]="isDisabled" (click)="handlecreateOpenings()">Save</button>
+    </ng-template>
+
+    <h2 class="data-title">Openings Data</h2>
+
+    <ng-container *ngIf="openingDataSource.data.length > 0; else noOpeningDataTemplate">
+        <table mat-table [dataSource]="openingDataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="cashatbank">
+                <th mat-header-cell *matHeaderCellDef> Cash At Bank </th>
+                <td mat-cell *matCellDef="let element"> {{ element.cashatbank }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cashinhand">
+                <th mat-header-cell *matHeaderCellDef> Cash in Hand </th>
+                <td mat-cell *matCellDef="let element"> {{ element.cashinhand }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cashatbankexp">
+                <th mat-header-cell *matHeaderCellDef> Cash At Bank (Expense) </th>
+                <td mat-cell *matCellDef="let element"> {{ element.cashatbankexp }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-icon color="primary" (click)="handleEditOpening(element)">edit_note</mat-icon>
+                    <mat-icon color="warn" style="margin-left: 10px;">delete</mat-icon>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+        </table>
+    </ng-container>
+    <ng-template #noOpeningDataTemplate>
+        <p>No Opening Data to display</p>
+    </ng-template>
+</div>

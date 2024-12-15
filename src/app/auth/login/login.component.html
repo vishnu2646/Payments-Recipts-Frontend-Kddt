@@ -1,0 +1,22 @@
+<section class="login-wrapper">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h1>Login Here...</h1>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input type="text" matInput placeholder="Enter Email" [(ngModel)]="loginForm.email">
+            </mat-form-field>
+            <br />
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input type="password" matInput placeholder="Enter Password" [(ngModel)]="loginForm.password">
+            </mat-form-field>
+            <br />
+            <button mat-raised-button color="accent" (click)="handleLogin()">Login</button>
+        </mat-card-content>
+    </mat-card>
+</section>

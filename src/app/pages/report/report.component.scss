@@ -1,0 +1,81 @@
+.container {
+    margin-top: 20px;
+}
+
+.table {
+    padding: 25px;
+}
+
+table {
+    tr {
+        td {
+            padding: 10px;
+        }
+    }
+}
+
+.header {
+    font-size: 25px;
+    color: black;
+    text-align: center;
+    padding: 5px;
+}
+
+.address {
+    margin-top: 30px;
+    line-height: 30px;
+}
+
+.amt {
+    font-size: 25px;
+    color: black;
+    padding:5px;
+    text-align: center;
+}
+
+.detail {
+    font-size: 20px;
+    text-align:left;
+    padding: 5px;
+}
+
+.details {
+    font-size: 20px;
+    text-align: center;
+}
+
+.heading, .address {
+    font-size: 21px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.title {
+    text-decoration:underline;
+    font-size: 25px;
+    text-align: center;
+}
+
+.address, .topic {
+    font-size: 25px;
+    text-align: center;
+}
+
+.topic {
+    margin-bottom: 30px;
+}
+
+.inctot,.exptot {
+    font-size: 25px;
+}
+
+.totals, .signature {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.signature {
+    font-weight: bold;
+    font-size: 20px;
+}

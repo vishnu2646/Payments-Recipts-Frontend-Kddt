@@ -1,0 +1,30 @@
+.container {
+    padding: 40px;
+    height: 100%;
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h2 {
+            color: var(--primary);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 18px;
+            line-height: 23px;
+        }
+    }
+
+    .form {
+        margin-top: 20px;
+
+        .bank-details .fields, .form-fields {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+    }
+}

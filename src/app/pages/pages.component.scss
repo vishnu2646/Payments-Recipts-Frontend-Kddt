@@ -1,0 +1,89 @@
+mat-drawer-container {
+    height: 100%;
+
+    mat-drawer {
+        width: 240px;
+        border: 0;
+
+        .header {
+            height: 59px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--primary-gray);
+
+            h3 {
+                color: var(--primary);
+                text-align: center;
+                font-size: 19px;
+                font-weight: bold;
+                margin-bottom: 0;
+            }
+        }
+
+        .menus {
+            margin-top: 30px;
+            padding-left: 20px;
+            padding-right: 20px;
+
+            p {
+                color: var(--primary-gray);
+                margin: 0;
+                font-size: 14px;
+                font-weight: normal;
+            }
+
+            ul {
+                list-style: none;
+                padding-left: 0px;
+
+                li {
+                    padding: 10px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    color: var(--primary-icon);
+                    font-size: 14px;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: var(--primary-bg-opacity);
+                        color: var(--primary);
+
+                        mat-icon {
+                            color: var(--primary);
+                        }
+                    }
+
+                    mat-icon {
+                        color: var(--primary-icon);
+                        font-size: 18px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+            }
+
+            &.active {
+
+                li {
+                    background-color: var(--primary-bg-opacity);
+                    color: var(--primary) !important;
+                    border-radius: 5px;
+                }
+            }
+        }
+    }
+
+    mat-drawer-content {
+        mat-toolbar {
+            height: 60px;
+            border-bottom: 1px solid var(--primary-gray);
+
+            .spacer {
+                flex: 1 1 auto;
+            }
+        }
+    }
+}

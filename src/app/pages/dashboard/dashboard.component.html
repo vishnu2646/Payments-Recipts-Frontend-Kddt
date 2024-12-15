@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="header">
+        <h2>dashboard</h2>
+        <button mat-raised-button color="accent" (click)="handleGetReportData()">View Report</button>
+    </div>
+    <div class="tiles">
+        <mat-card class="income">
+            <mat-card-header>
+                <mat-card-title>Income</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    {{ tilesData?.incomeTotal | currency: 'INR' }}
+                </p>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="expense">
+            <mat-card-header>
+                <mat-card-title>Expense</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    {{ tilesData?.expenseData | currency: 'INR' }}
+                </p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="header">
+        <h2>Monthly Income / Expense</h2>
+    </div>
+    <div class="charts">
+        <mat-card class="area">
+            <mat-card-content>
+                <canvas id="linechart"></canvas>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="bar">
+            <mat-card-content>
+                <canvas id="barchart"></canvas>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

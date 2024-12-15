@@ -1,0 +1,28 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="false">
+    <mat-drawer #drawer mode="side" opened>
+        <div class="header">
+            <h3>KDDT</h3>
+        </div>
+        <div class="menus" *ngFor="let menu of menus">
+            <p>{{ menu.title }}</p>
+            <ul>
+                <li *ngFor="let link of menu.links" (click)="handleSelectedRoute(link)">
+                    <mat-icon>{{ link.icon }}</mat-icon>
+                    {{ link.menuTitle }}
+                </li>
+            </ul>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-toolbar>
+            <button mat-icon-button (click)="drawer.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <button mat-icon-button color="warn" (click)="handleRefresh()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>
