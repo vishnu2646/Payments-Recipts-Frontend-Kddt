@@ -8,7 +8,9 @@ import { IExepnse, IExpenseType, IIncome, IIncomeType } from '../types/types';
 })
 export class ApiService {
 
-    private baseUrl = 'http://localhost:8000/api/user';
+    // private baseUrl = 'http://localhost:8000/api/user';
+
+    private baseUrl = 'http://51.20.53.57/api/user';
 
     private httpClient = inject(HttpClient);  // Inject HttpClient
 
