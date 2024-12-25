@@ -10,7 +10,7 @@ export class ApiService {
 
     // private baseUrl = 'http://localhost:8000/api/user';
 
-    private baseUrl = 'http://51.20.53.57/api/user';
+    private baseUrl = 'https://kddt.pythonanywhere.com/api/user';
 
     private httpClient = inject(HttpClient);  // Inject HttpClient
 
