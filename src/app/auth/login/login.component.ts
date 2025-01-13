@@ -58,6 +58,10 @@ export class LoginComponent {
         })
     }
 
+    public handleNavigateToLogin() {
+        this.router.navigate(['/auth/register']);
+    }
+
     private openSnackBar(message: string) {
         this._snackBar.open(message, 'X', {
             horizontalPosition: this.horizontalPosition,

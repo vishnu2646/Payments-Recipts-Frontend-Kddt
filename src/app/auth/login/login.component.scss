@@ -21,6 +21,12 @@ section {
             mat-form-field {
                 width: 100%;
             }
+
+            .actions {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
         }
     }
 }

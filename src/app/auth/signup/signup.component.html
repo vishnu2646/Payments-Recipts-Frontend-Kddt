@@ -1,1 +1,35 @@
-<p>signup works!</p>
+<section class="login-wrapper">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h1>Signup Here...</h1>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input type="text" matInput placeholder="Enter Email" [(ngModel)]="signupData.email">
+            </mat-form-field>
+            <br />
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput placeholder="Enter Name" [(ngModel)]="signupData.name">
+            </mat-form-field>
+            <br />
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input type="password" matInput placeholder="Enter Password" [(ngModel)]="signupData.password">
+            </mat-form-field>
+            <br />
+            <mat-form-field appearance="outline">
+                <mat-label>Re Password</mat-label>
+                <input type="password" matInput placeholder="Enter Re Password" [(ngModel)]="signupData.password2">
+            </mat-form-field>
+            <br />
+            <div class="actions">
+                <button mat-raised-button color="accent" (click)="handleCreateAccount()">Sign Up</button>
+                <button mat-button color="primary" (click)="handleNavigateToLogin()">Already Have an Account?</button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</section>
