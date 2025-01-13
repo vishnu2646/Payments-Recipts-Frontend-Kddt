@@ -8,6 +8,8 @@ import { DataComponent } from './pages/data/data.component';
 import { authGuard } from './guard/auth.guard';
 import { OpeningsComponent } from './pages/openings/openings.component';
 import { ReportComponent } from './pages/report/report.component';
+import { ReceiptComponent } from './pages/receipt/receipt.component';
+import { VoucherComponent } from './pages/voucher/voucher.component';
 
 export const routes: Routes = [
     {
@@ -37,6 +39,14 @@ export const routes: Routes = [
                 component: OpeningsComponent
             }
         ]
+    },
+    {
+        path: 'receipt/:id',
+        component: ReceiptComponent
+    },
+    {
+        path: 'voucher/:id',
+        component: VoucherComponent
     },
     {
         path: 'report',

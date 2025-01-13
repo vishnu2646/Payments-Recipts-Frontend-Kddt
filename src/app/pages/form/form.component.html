@@ -84,7 +84,8 @@
                     </mat-form-field>
                 </div>
             </div>
-            <button mat-raised-button color="accent" (click)="handleSaveIncome()"> Add Income </button>
+            <button mat-raised-button color="accent" (click)="handleSaveIncome()" *ngIf="dataId === 0"> Add Income </button>
+            <button mat-raised-button color="accent" *ngIf="dataId > 0" (click)="handleUpdateIncomeForm()"> Update Income </button>
             <button mat-raised-button color="primary" (click)="handleCreateIncomeType()" *ngIf="toggleAddIncomeOption" style="margin-left: 20px;"> Add Income Type </button>
         </ng-container>
         <ng-template #expenseFormTemplate>
@@ -118,7 +119,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline">
                     <mat-label>Expense Mode</mat-label>
-                    <mat-select [(value)]="selectedIncomeMode" (selectionChange)="handleExpenseModeChange($event)">
+                    <mat-select [(value)]="selectedExpenseMode" (selectionChange)="handleExpenseModeChange($event)">
                         @for (mode of expenseModes; track mode) {
                             <mat-option [value]="mode">{{ mode }}</mat-option>
                         }
@@ -160,7 +161,8 @@
                     </mat-form-field>
                 </div>
             </div>
-            <button mat-raised-button color="accent" (click)="handleSaveExpense()"> Add Expense </button>
+            <button mat-raised-button color="accent" (click)="handleSaveExpense()" *ngIf="dataId === 0"> Add Expense </button>
+            <button mat-raised-button color="accent" *ngIf="dataId > 0" (click)="handleUpdateExpenseForm()"> Update Expense </button>
             <button mat-raised-button color="primary" (click)="handleCreateExpenseType()" *ngIf="toggleAddExpenseOption" style="margin-left: 20px;"> Add Expense Type </button>
         </ng-template>
     </section>

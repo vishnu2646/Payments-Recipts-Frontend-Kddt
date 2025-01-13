@@ -6,7 +6,7 @@
         <div class="menus" *ngFor="let menu of menus">
             <p>{{ menu.title }}</p>
             <ul>
-                <li *ngFor="let link of menu.links" (click)="handleSelectedRoute(link)">
+                <li *ngFor="let link of menu.links" [ngClass]="link.active ? 'active' : ''" (click)="handleSelectedRoute(link)">
                     <mat-icon>{{ link.icon }}</mat-icon>
                     {{ link.menuTitle }}
                 </li>

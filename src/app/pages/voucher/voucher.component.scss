@@ -1,0 +1,97 @@
+.voucher-wrapper {
+    border: 1px solid var(--black);
+    .heading {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        border-bottom: 1px solid var(--black);
+        padding: 10px 0px;
+
+        img {
+            margin-left: 10px;
+        }
+
+        h1, h4 {
+            margin: 0;
+        }
+    }
+
+    .header {
+        border-bottom: 1px solid var(--black);
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        .header-title {
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+
+            h4 {
+                margin-bottom: 0;
+            }
+        }
+
+        .header-content {
+            flex: 1;
+            border-left: 1px solid var(--black);
+
+            .voucher-id {
+                border-bottom: 1px solid var(--black);
+                padding: 10px;
+            }
+
+            .voucher-date {
+                padding: 10px;
+            }
+
+            .text {
+                margin: 0;
+            }
+        }
+    }
+
+    .content {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        border-bottom: 1px solid var(--black);
+
+        .content-title {
+            padding: 10px;
+            border-right: 1px solid var(--black);
+            width: 105px;
+
+            h5 {
+                margin: 0;
+            }
+        }
+
+        .content-value {
+            flex: 1;
+
+            h5 {
+                margin: 0;
+            }
+        }
+    }
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        
+        .action-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 40px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .signature {
+            text-align: right;
+            padding-right: 10px;
+        }
+    }
+}

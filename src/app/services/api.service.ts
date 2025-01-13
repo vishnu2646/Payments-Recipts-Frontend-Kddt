@@ -8,14 +8,18 @@ import { IExepnse, IExpenseType, IIncome, IIncomeType } from '../types/types';
 })
 export class ApiService {
 
-    // private baseUrl = 'http://localhost:8000/api/user';
+    private baseUrl = 'http://127.0.0.1:8000/api/user';
 
-    private baseUrl = 'https://kddt.pythonanywhere.com/api/user';
+    // private baseUrl = 'https://kdda.pythonanywhere.com/api/user';
 
-    private httpClient = inject(HttpClient);  // Inject HttpClient
+    private httpClient = inject(HttpClient);
 
     public handleLoginService(data: any): Observable<any>  {
         return this.httpClient.post(`${this.baseUrl}/login/`, data);
+    }
+
+    public handleRegisterService(data: any): Observable<any> {
+        return this.httpClient.post(`${this.baseUrl}/register/`, data);
     }
 
     public handleLogoutService(options: any): Observable<any>  {
@@ -72,6 +76,14 @@ export class ApiService {
         return this.httpClient.get<IIncome[]>(`${this.baseUrl}/income/list/`, { headers });
     }
 
+    public getIncomeDetailsService(id: number, options: any): Observable<IIncome> {
+        const headers = new HttpHeaders({
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${options.token.access}`
+        });
+        return this.httpClient.get<IIncome>(`${this.baseUrl}/income/detail/${id}`, { headers });
+    }
+
     public handleGetIncomeTypeService(options: any): Observable<IIncomeType[]> {
         const headers = new HttpHeaders({
             'Accept': 'application/json',
@@ -90,6 +102,14 @@ export class ApiService {
         return this.httpClient.post(`${this.baseUrl}/incometype/create/`, data, { headers });
     }
 
+    public handleDeleteIncomeService(id: number, options: any): Observable<any> {
+        const headers = new HttpHeaders({
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${options.token.access}`
+        });
+        return this.httpClient.delete(`${this.baseUrl}/income/delete/${id}`, { headers });
+    }
+
     public handleGetExpenseService(options: any): Observable<IExepnse[]> {
         const headers = new HttpHeaders({
             'Accept': 'application/json',
@@ -97,6 +117,35 @@ export class ApiService {
         });
 
         return this.httpClient.get<IExepnse[]>(`${this.baseUrl}/expense/list/`, { headers });
+    }
+
+    public handleGetExpenseDetailService(id: number, options: any): Observable<IExepnse> {
+        const headers = new HttpHeaders({
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${options.token.access}`
+        });
+
+        return this.httpClient.get<IExepnse>(`${this.baseUrl}/expense/detail/${id}/`, { headers });
+    }
+
+    public handleUpdateIncomeService(id: number, options: any, data: any): Observable<any> {
+        const headers = new HttpHeaders({
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${options.token.access}`
+        });
+        return this.httpClient.post<any>(`${this.baseUrl}/income/update/${id}/`, data , { headers });
+    }
+
+    public handleUpdateExpenseService(id: number, options: any, data: any): Observable<any> {
+        return this.httpClient.post<any>(`${this.baseUrl}/expense/update/${id}/`, data);
+    }
+
+    public handleDeleteExpenseservice(id: number, options: any): Observable<any> {
+        const headers = new HttpHeaders({
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${options.token.access}`
+        });
+        return this.httpClient.delete(`${this.baseUrl}/expense/delete/${id}`, { headers });
     }
 
     public handleGetExpenseTypeService(options: any): Observable<IExpenseType[]> {

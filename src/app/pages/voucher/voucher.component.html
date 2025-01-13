@@ -1,0 +1,73 @@
+<div class="voucher-wrapper">
+    <div class="heading">
+        <div>
+            <img src="../../../assets/trust1.jpeg" width="80" height="80" style="margin-right:5%">
+        </div>
+        <div>
+            <h1>Krishnagiri Dristict Deaf Association</h1>
+            <h4>KDDA,Auditorium,29/1,2,Titan Township,H.C.F Post,Mathigiri,Hosur 635110</h4>
+        </div>
+    </div>
+    <div class="header">
+        <div class="header-title">
+            <h4>VOUCHER</h4>
+        </div>
+        <div class="header-content">
+            <div class="voucher-id">
+                <h5 class="text">Sr.No: Exp {{ voucherData.expid }}</h5>
+            </div>
+            <div class="voucher-date"> 
+                <h5 class="text">Date: {{ voucherData.date }}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="content-title">
+            <h5 class="name">Name</h5>
+        </div>
+        <div class="content-value">
+            <h5 class="value">{{ voucherData.expense_name }}</h5>
+        </div>
+    </div>
+    <div class="content">
+        <div class="content-title">
+            <h5 class="name">Amount(Rs.)</h5>
+        </div>
+        <div class="content-value">
+            <h5 class="value">{{ voucherData.amount }}</h5>
+        </div>
+    </div>
+    <div class="content">
+        <div class="content-title">
+            <h5 class="name">Amount In</h5>
+        </div>
+        <div class="content-value">
+            <h5 class="value">{{ toWords.convert(+voucherData.amount || 0) }}</h5>
+        </div>
+    </div>
+    <div class="content">
+        <div class="content-title">
+            <h5 class="name">Payment Mode</h5>
+        </div>
+        <div class="content-value">
+            <h5 class="value">{{ voucherData.mode }}</h5>
+        </div>
+    </div>
+    <div class="content">
+        <div class="content-title">
+            <h5 class="name">Particulars</h5>
+        </div>
+        <div class="content-value">
+            <h5 class="value">{{ voucherData.reason }}</h5>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="action-details">
+            <div>Recived By</div>
+            <div>Given By</div>
+        </div>
+        <div class="signature">
+            Precident/Treasurer
+        </div>
+    </div>
+</div>

@@ -14,6 +14,7 @@ import moment from 'moment';
 import { UserService } from '../../services/user.service';
 import { ApiService } from '../../services/api.service';
 import { IExpenseType, IIncomeType } from '../../types/types';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -41,8 +42,14 @@ export class FormComponent implements OnInit {
 
     private apiService = inject(ApiService);
 
+    private activatedRouter = inject(ActivatedRoute);
+
+    private router = inject(Router);
+
     private user: { msg: String, token: { refresh: String, access: String } } = {} as { msg: String, token: { refresh: String, access: String } }
 
+    public dataId: number = 0;
+    
     public formType = ['Income', 'Expense'];
 
     public selectedType = 'Income';
@@ -70,6 +77,8 @@ export class FormComponent implements OnInit {
     public toggleAddIncomeOption: boolean = false;
 
     public toggleAddExpenseOption: boolean = false;
+
+    public type: string = '';
 
     public incomeForm = {
         incid: '',
@@ -99,15 +108,30 @@ export class FormComponent implements OnInit {
         dateinbank: ''
     }
 
+    constructor() {
+        this.activatedRouter.queryParams.subscribe(params => {
+            this.dataId = params['id'] || 0;
+            this.type = params['type'] || '';
+        });
+    }
+
     public ngOnInit() {
         this.getUserDetails();
         this.handleGetIncomeTypes();
+        if(this.dataId > 0) {
+            if(this.type === 'income') {
+                this.getIncomeDetailData();
+            } else if(this.type === 'expense') {
+                this.selectedType = 'Expense';
+                this.getExpenseDetailData();
+            }
+        }
     }
 
     public getUserDetails() {
         const user = this.userService.getUserData();
         if(user) {
-            this.user = user
+            this.user = user;
         }
     }
 
@@ -118,9 +142,13 @@ export class FormComponent implements OnInit {
         }
     }
 
-    public handleIncomeModeChange(event: MatSelectChange) {
-        this.selectedIncomeMode = event.source.value;
+    public handleIncomeModeChange(event?: MatSelectChange) {
+        if(event) {
+            this.selectedIncomeMode = event.source.value;
+        }
+
         this.incomeForm.mode = this.selectedIncomeMode.toString();
+
         if(this.incomeForm.mode === 'CASH') {
             this.isBankDetailsVisible = false;
         } else {
@@ -128,14 +156,81 @@ export class FormComponent implements OnInit {
         }
     }
 
-    public handleExpenseModeChange(event: MatSelectChange) {
-        this.selectedExpenseMode = event.source.value;;
+    public handleExpenseModeChange(event?: MatSelectChange) {
+        if(event) {
+            this.selectedExpenseMode = event.source.value;
+        }
+
         this.expenseForm.mode = this.selectedExpenseMode.toString();
+
         if(this.expenseForm.mode === 'CASH') {
             this.isBankDetailsVisible = false;
         } else {
             this.isBankDetailsVisible = true;
         }
+    }
+
+    public getIncomeDetailData() {
+        this.apiService.getIncomeDetailsService(this.dataId, this.user).subscribe({
+            next: (response: any) => {
+                this.incomeForm = response;
+                if(this.incomeForm.mode.includes('Transfer')) {
+                    this.selectedIncomeMode = 'Transfer';
+                    this.handleIncomeModeChange();
+                } else if(this.incomeForm.mode.includes('Cash')) {
+                    this.selectedIncomeMode = 'CASH';
+                    this.handleIncomeModeChange();
+                } else if (this.incomeForm.mode.includes('Cheque')) {
+                    this.selectedIncomeMode = 'CHEQUE'
+                    this.handleIncomeModeChange();
+                } else if(this.selectedIncomeMode.includes('demand draft')) {
+                    this.selectedIncomeMode = 'DEMAND DRAFT';
+                    this.handleIncomeModeChange();
+                }
+                const date = this.convertStringToDate(response.date);
+                const dateinbank = this.convertStringToDate(response.dateinbank);
+                this.incomeForm.date = new Date(date) as unknown as string;
+                this.incomeForm.dateinbank = new Date(dateinbank) as unknown as string;
+            },
+            error: (error: Error) => {
+                console.log(error);
+            },
+            complete: () => {
+                console.log('completed');
+            }
+        });
+    }
+
+    public getExpenseDetailData() {
+        this.apiService.handleGetExpenseDetailService(this.dataId, this.user).subscribe({
+            next: (response: any) => {
+                this.expenseForm = response;
+                if(this.expenseForm.mode.includes('Transfer')) {
+                    this.selectedExpenseMode = 'Transfer';
+                    this.handleExpenseModeChange();
+                } else if(this.expenseForm.mode.includes('CASH')) {
+                    this.selectedExpenseMode = 'CASH';
+                    this.handleExpenseModeChange();
+                } else if (this.expenseForm.mode.includes('CHEQUE')) {
+                    this.selectedExpenseMode = 'CHEQUE'
+                    this.handleExpenseModeChange();
+                } else if(this.selectedIncomeMode.includes('demand draft')) {
+                    this.selectedExpenseMode = 'DEMAND DRAFT';
+                    this.handleExpenseModeChange();
+                }
+
+                // const date = this.convertStringToDate(response.date);
+                // const dateinbank = this.convertStringToDate(response.dateinbank);
+                // this.expenseForm.date = new Date(date) as unknown as string;
+                // this.expenseForm.dateinbank = new Date(dateinbank) as unknown as string;
+            },
+            error: (error: Error) => {
+                console.log(error);
+            },
+            complete: () => {
+                console.log('completed');
+            }
+        });
     }
 
     public handleSaveIncome() {
@@ -156,6 +251,43 @@ export class FormComponent implements OnInit {
                 this.handleResetIncomeForm();
             }
         });
+    }
+
+    public handleUpdateIncomeForm() {
+        this.incomeForm.date = moment(this.incomeForm.date).format('yyyy-MM-DD');
+        this.incomeForm.dateinbank = moment(this.incomeForm.dateinbank).format('yyyy-MM-DD');
+
+        this.apiService.handleUpdateIncomeService(this.dataId, this.user, this.incomeForm).subscribe({
+            next: (response) => {
+                console.log(response);
+                alert(response);
+                this.router.navigate(['/dashboard/data']);
+            },
+            error: (error: Error) => {
+                console.log(error);
+            },
+            complete: () => {
+                console.log('complete');
+            }
+        })
+    }
+
+    public handleUpdateExpenseForm() {
+        this.expenseForm.date = moment(this.expenseForm.date).format('yyyy-MM-DD');
+        this.expenseForm.dateinbank = moment(this.expenseForm.dateinbank).format('yyyy-MM-DD');
+
+        this.apiService.handleUpdateExpenseService(this.dataId, this.user, this.expenseForm).subscribe({
+            next: (response) => {
+                alert(response);
+                this.router.navigate(['/dashboard/data']);
+            },
+            error: (error: Error) => {
+                console.log(error);
+            },
+            complete: () => {
+                console.log('complete');
+            }
+        })
     }
 
     public handleSaveExpense() {
@@ -194,10 +326,6 @@ export class FormComponent implements OnInit {
         }
     }
 
-    public updateSelection(event: any) {
-        console.log("updateSelection", event);
-    }
-
     public handleFilterExpenseNames(event: String) {
         this.filteredExpenseNameOptions = this._filterExpenseOptions(event.toString().toLowerCase())
 
@@ -215,7 +343,9 @@ export class FormComponent implements OnInit {
 
         this.apiService.handleCreateIncomeTypeService(type, this.user).subscribe({
             next: (responseData) => {
-                console.log(responseData);
+                if(responseData) {
+                    this.handleGetIncomeTypes();
+                }
             },
             error: (error) => {
                 console.log(error)
@@ -237,13 +367,14 @@ export class FormComponent implements OnInit {
 
         this.apiService.handleCreateExpenseTypeService(type, this.user).subscribe({
             next: (responseData) => {
-                console.log(responseData);
+                if(responseData) {
+                    this.handleGetExpenseTypes();
+                }
             },
             error: (error) => {
                 console.log(error)
             },
             complete: () => {
-
                 this.toggleAddExpenseOption = !this.toggleAddExpenseOption;
                 this.handleResetExpenseForm();
             }
@@ -327,4 +458,9 @@ export class FormComponent implements OnInit {
             dateinbank: ''
         }
     }
+
+    private convertStringToDate(dateStr: string): Date {
+        const [day, month, year] = dateStr.split('-');
+        return new Date(`${year}-${month}-${day}`);  // Convert to YYYY-MM-DD format
+      }
 }

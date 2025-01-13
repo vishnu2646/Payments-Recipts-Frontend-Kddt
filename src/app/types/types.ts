@@ -1,7 +1,8 @@
 export interface IRoute {
     icon: String,
     menuTitle: String,
-    route: String
+    route: String,
+    active: boolean
 }
 
 export interface IIncome {

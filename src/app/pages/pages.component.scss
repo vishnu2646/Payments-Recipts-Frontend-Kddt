@@ -62,15 +62,12 @@ mat-drawer-container {
                         align-items: center;
                         justify-content: center;
                     }
-                }
-            }
 
-            &.active {
-
-                li {
-                    background-color: var(--primary-bg-opacity);
-                    color: var(--primary) !important;
-                    border-radius: 5px;
+                    &.active {
+                        background-color: var(--primary-bg-opacity);
+                        color: var(--primary) !important;
+                        border-radius: 5px;
+                    }
                 }
             }
         }

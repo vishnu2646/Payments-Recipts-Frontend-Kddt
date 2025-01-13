@@ -25,6 +25,10 @@
             table {
                 td {
                     width: 150px;
+
+                    mat-icon {
+                        color: red;
+                    }
                 }
             }
         }

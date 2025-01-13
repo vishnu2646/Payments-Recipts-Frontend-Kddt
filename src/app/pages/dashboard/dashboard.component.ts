@@ -182,6 +182,7 @@ export class DashboardComponent implements OnInit {
             options: {
                 maintainAspectRatio: false,
                 responsive: true,
+                indexAxis: 'y'
             }
         });
     }
