@@ -10,6 +10,7 @@ import { OpeningsComponent } from './pages/openings/openings.component';
 import { ReportComponent } from './pages/report/report.component';
 import { ReceiptComponent } from './pages/receipt/receipt.component';
 import { VoucherComponent } from './pages/voucher/voucher.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 export const routes: Routes = [
     {
@@ -59,6 +60,10 @@ export const routes: Routes = [
             {
                 path: 'login',
                 component: LoginComponent
+            },
+            {
+                path: 'register',
+                component: SignupComponent
             }
         ]
     }
