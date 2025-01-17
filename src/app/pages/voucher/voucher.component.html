@@ -4,7 +4,7 @@
             <img src="../../../assets/trust1.jpeg" width="80" height="80" style="margin-right:5%">
         </div>
         <div>
-            <h1>Krishnagiri Dristict Deaf Association</h1>
+            <h1>Krishnagiri Dristict Deaf Trust</h1>
             <h4>KDDA,Auditorium,29/1,2,Titan Township,H.C.F Post,Mathigiri,Hosur 635110</h4>
         </div>
     </div>
@@ -17,7 +17,7 @@
                 <h5 class="text">Sr.No: Exp {{ voucherData.expid }}</h5>
             </div>
             <div class="voucher-date"> 
-                <h5 class="text">Date: {{ voucherData.date }}</h5>
+                <h5 class="text">Date: {{ voucherData.date.toString()| date: 'dd/MM/yyyy' }}</h5>
             </div>
         </div>
     </div>
@@ -45,12 +45,22 @@
             <h5 class="value">{{ toWords.convert(+voucherData.amount || 0) }}</h5>
         </div>
     </div>
-    <div class="content">
-        <div class="content-title">
-            <h5 class="name">Payment Mode</h5>
+    <div class="" style="display: flex;border-bottom: 1px solid #000;">
+        <div class="" style="display: flex;">
+            <div class="content-title" style="padding: 10px; width: 105px;border-right: 1px solid var(--black);">
+                <h5 class="name" style="margin: 0;">Payment Mode</h5>
+            </div>
+            <div class="content-value" style="padding: 10px; width: 100px;">
+                <h5 class="value" style="margin: 0;">{{ voucherData.mode }}</h5>
+            </div>
         </div>
-        <div class="content-value">
-            <h5 class="value">{{ voucherData.mode }}</h5>
+        <div class="" style="display: flex;align-items: center; border-left: 1px solid #000;">
+            <div class="content-title" style="padding: 10px;">
+                <h5 class="name" style="margin: 0;">Paid Through :</h5>
+            </div>
+            <div class="content-value" style="padding: 10px;">
+                <h5 class="value" style="margin: 0;">{{ voucherData.expense_by }}</h5>
+            </div>
         </div>
     </div>
     <div class="content">

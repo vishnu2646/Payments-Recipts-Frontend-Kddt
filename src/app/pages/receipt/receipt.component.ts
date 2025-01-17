@@ -4,12 +4,15 @@ import { ToWords } from 'to-words';
 import { ApiService } from '../../services/api.service';
 import { UserService } from '../../services/user.service';
 import { IIncome } from '../../types/types';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
     selector: 'app-receipt',
     standalone: true,
-    imports: [],
+    imports: [
+        CommonModule
+    ],
     templateUrl: './receipt.component.html',
     styleUrl: './receipt.component.scss'
 })

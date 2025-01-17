@@ -4,11 +4,14 @@ import { ApiService } from '../../services/api.service';
 import { UserService } from '../../services/user.service';
 import { IExepnse } from '../../types/types';
 import { ToWords } from 'to-words';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-voucher',
     standalone: true,
-    imports: [],
+    imports: [
+        CommonModule
+    ],
     templateUrl: './voucher.component.html',
     styleUrl: './voucher.component.scss'
 })

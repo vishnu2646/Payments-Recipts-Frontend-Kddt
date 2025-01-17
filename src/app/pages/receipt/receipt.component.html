@@ -1,8 +1,7 @@
 <div class="container">
     <div class="title">
-        <img src="../../../assets/logo.png" alt="logo" height="100" width="100"> 
-        <h1>KRISHNAGIRI DISTRICT DEAF TRUST</h1>
         <img src="../../../assets/trust1.jpeg" alt="logo" height="100" width="100"> 
+        <h1>KRISHNAGIRI DISTRICT DEAF TRUST</h1>
     </div>
     <div class="address">
         <p>Regd:46/2009</p>
@@ -14,7 +13,7 @@
     <div class="header">
         <p>No: {{ receiptData.incid }}</p>
         <h3>Receipt</h3>
-        <p>Date: {{ receiptData.date }}</p>
+        <p>Date: {{ receiptData.date.toString() | date: 'dd/MM/yyyy' }}</p>
     </div>
     <div class="content">
         <div class="name-content">
@@ -63,7 +62,7 @@
                 </div>
             </div>
             <div>
-                General Seceratry / Treasurer
+                President / Treasurer
             </div>
         </div>
     </div>
