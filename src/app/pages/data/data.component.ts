@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -41,6 +41,8 @@ export class DataComponent {
     private router = inject(Router);
 
     private _snackBar = inject(MatSnackBar);
+
+    private cd = inject(ChangeDetectorRef);
 
     public isIncomeLoading: boolean = false;
 
@@ -95,6 +97,8 @@ export class DataComponent {
         this.apiService.handleDeleteIncomeService(id, this.user).subscribe({
             next: (response: any) => {
                 this.openSnackBar('Income deleted successfully');
+                this.handleGetIncomeData();
+                this.cd.detectChanges();
             },
             error: (error: Error) => {
                 console.log(error);
@@ -102,13 +106,15 @@ export class DataComponent {
             complete: () => {
                 console.log("complete");
             }
-        })
+        });
     }
 
     public handleDeleteExpense(id: number) {
         this.apiService.handleDeleteExpenseservice(id, this.user).subscribe({
             next: (response: any) => {
                 this.openSnackBar('Expense deleted successfully');
+                this.handleGetExpenseData();
+                this.cd.detectChanges();
             },
             error: (error: Error) => {
                 console.log(error);
@@ -131,6 +137,7 @@ export class DataComponent {
         this.apiService.handleGetIncomeService(this.user).subscribe({
             next: (data: IIncome[]) => {
                 this.incomeDataSource.data = data;
+                console.log(data);
                 this.displayIncomeColumns = Object.keys(data[0]);
                 this.displayIncomeColumns = [...this.displayIncomeColumns, 'Action']
             },

@@ -24,6 +24,11 @@
             <ng-template #incomeTable>
                 <div class="mat-elevation-z8 income-data-table">
                     <table mat-table [dataSource]="incomeDataSource">
+
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef style="display: none;"> ID </th>
+                            <td mat-cell *matCellDef="let row" [routerLink]="['/receipt', row.id]" style="cursor: pointer;" style="display: none;"> {{ row.incid }} </td>
+                        </ng-container> 
     
                         <ng-container matColumnDef="incid">
                             <th mat-header-cell *matHeaderCellDef> Income ID </th>
@@ -83,7 +88,7 @@
                         <ng-container matColumnDef="Action">
                             <th mat-header-cell *matHeaderCellDef> Action </th>
                             <td mat-cell *matCellDef="let row">
-                                <mat-icon color="danger" (click)="handleDeleteIncome(row.incid)">delete</mat-icon>
+                                <mat-icon color="danger" (click)="handleDeleteIncome(row.id)">delete</mat-icon>
                             </td>
                         </ng-container>
     
@@ -166,7 +171,7 @@
                         <ng-container matColumnDef="Action">
                             <th mat-header-cell *matHeaderCellDef> Action </th>
                             <td mat-cell *matCellDef="let row">
-                                <mat-icon color="danger" (click)="handleDeleteExpense(row.id)">delete</mat-icon>
+                                <mat-icon color="danger" (click)="handleDeleteExpense(row.expid)">delete</mat-icon>
                             </td>
                         </ng-container>
     
