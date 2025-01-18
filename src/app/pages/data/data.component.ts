@@ -93,8 +93,8 @@ export class DataComponent {
         this.expenseDataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    public handleDeleteIncome(id: number) {
-        this.apiService.handleDeleteIncomeService(id, this.user).subscribe({
+    public handleDeleteIncome(income: IIncome) {
+        this.apiService.handleDeleteIncomeService(income.incid, this.user).subscribe({
             next: (response: any) => {
                 this.openSnackBar('Income deleted successfully');
                 this.handleGetIncomeData();
@@ -137,7 +137,6 @@ export class DataComponent {
         this.apiService.handleGetIncomeService(this.user).subscribe({
             next: (data: IIncome[]) => {
                 this.incomeDataSource.data = data;
-                console.log(data);
                 this.displayIncomeColumns = Object.keys(data[0]);
                 this.displayIncomeColumns = [...this.displayIncomeColumns, 'Action']
             },
