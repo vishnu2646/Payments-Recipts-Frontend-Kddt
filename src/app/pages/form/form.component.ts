@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MatOptionSelectionChange, provideNativeDateAdapter } from '@angular/material/core';
+import { provideNativeDateAdapter, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,7 +16,6 @@ import { ApiService } from '../../services/api.service';
 import { IExpenseType, IIncomeType } from '../../types/types';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
 @Component({
     selector: 'app-form',
     standalone: true,
@@ -29,10 +28,12 @@ import { ActivatedRoute, Router } from '@angular/router';
         MatButtonModule,
         FormsModule,
         CommonModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatNativeDateModule,
     ],
     providers: [
         provideNativeDateAdapter(),
+        { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     ],
     templateUrl: './form.component.html',
     styleUrl: './form.component.scss'
@@ -49,7 +50,7 @@ export class FormComponent implements OnInit {
     private user: { msg: String, token: { refresh: String, access: String } } = {} as { msg: String, token: { refresh: String, access: String } }
 
     public dataId: number = 0;
-    
+
     public formType = ['Income', 'Expense'];
 
     public selectedType = 'Income';
@@ -187,10 +188,10 @@ export class FormComponent implements OnInit {
                     this.selectedIncomeMode = 'DEMAND DRAFT';
                     this.handleIncomeModeChange();
                 }
-                const date = this.convertStringToDate(response.date);
-                const dateinbank = this.convertStringToDate(response.dateinbank);
-                this.incomeForm.date = new Date(date) as unknown as string;
-                this.incomeForm.dateinbank = new Date(dateinbank) as unknown as string;
+                // const date = this.convertStringToDate(response.date);
+                // const dateinbank = this.convertStringToDate(response.dateinbank);
+                // this.incomeForm.date = new Date(date) as unknown as string;
+                // this.incomeForm.dateinbank = new Date(dateinbank) as unknown as string;
             },
             error: (error: Error) => {
                 console.log(error);
@@ -322,7 +323,9 @@ export class FormComponent implements OnInit {
     public handleFilterIncomeNames(event: any) {
         this.filteredOptions = this._filter(event);
         if(this.filteredOptions.length === 0) {
-            this.toggleAddIncomeOption = !this.toggleAddIncomeOption;
+            this.toggleAddIncomeOption = true;
+        } else {
+            this.toggleAddIncomeOption = false;
         }
     }
 
@@ -330,7 +333,9 @@ export class FormComponent implements OnInit {
         this.filteredExpenseNameOptions = this._filterExpenseOptions(event.toString().toLowerCase())
 
         if(this.filteredExpenseNameOptions.length === 0) {
-            this.toggleAddExpenseOption = !this.toggleAddExpenseOption;
+            this.toggleAddExpenseOption = true;
+        } else {
+            this.toggleAddExpenseOption = false;
         }
     }
 

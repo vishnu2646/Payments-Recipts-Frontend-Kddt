@@ -23,6 +23,7 @@
     "@angular/router": "^17.3.0",
     "chart.js": "^4.4.7",
     "moment": "^2.30.1",
+    "ngx-device-detector": "^7.0.0",
     "rxjs": "~7.8.0",
     "to-words": "^4.2.0",
     "tslib": "^2.3.0",

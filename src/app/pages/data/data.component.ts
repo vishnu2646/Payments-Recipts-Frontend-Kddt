@@ -94,7 +94,7 @@ export class DataComponent {
     }
 
     public handleDeleteIncome(income: IIncome) {
-        this.apiService.handleDeleteIncomeService(income.incid, this.user).subscribe({
+        this.apiService.handleDeleteIncomeService(income.id, this.user).subscribe({
             next: (response: any) => {
                 this.openSnackBar('Income deleted successfully');
                 this.handleGetIncomeData();
@@ -125,18 +125,18 @@ export class DataComponent {
         })
     }
 
-    public handleRouteUpdateIncome(id: number) {
-        this.router.navigate(['/dashboard/form'], { queryParams: { id: id, type: 'income' } });
+    public handleRouteUpdateIncome(row: IIncome) {
+        this.router.navigate(['/dashboard/form'], { queryParams: { id: row.incid, type: 'income' } });
     }
 
-    public handleRouteUpdateExpense(id: number) {
-        this.router.navigate(['/dashboard/form'], { queryParams: { id: id, type: 'expense' } });
+    public handleRouteUpdateExpense(row: IExepnse) {
+        this.router.navigate(['/dashboard/form'], { queryParams: { id: row.expid, type: 'expense' } });
     }
 
     private handleGetIncomeData() {
         this.apiService.handleGetIncomeService(this.user).subscribe({
             next: (data: IIncome[]) => {
-                this.incomeDataSource.data = data;
+                this.incomeDataSource.data = data.sort((a, b) => a.incid - b.incid);
                 this.displayIncomeColumns = Object.keys(data[0]);
                 this.displayIncomeColumns = [...this.displayIncomeColumns, 'Action']
             },
@@ -152,7 +152,7 @@ export class DataComponent {
     private handleGetExpenseData() {
         this.apiService.handleGetExpenseService(this.user).subscribe({
             next: (data: IExepnse[]) => {
-                this.expenseDataSource.data = data;
+                this.expenseDataSource.data = data.sort((a, b) => a.expid - b.expid);
                 this.displayExpenseColumns = Object.keys(data[0]);
                 this.displayExpenseColumns = [...this.displayExpenseColumns, 'Action'];
             },

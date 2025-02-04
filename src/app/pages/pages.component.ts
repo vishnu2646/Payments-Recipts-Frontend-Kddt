@@ -11,6 +11,7 @@ import { IRoute } from '../types/types';
 import { UserService } from '../services/user.service';
 import { ApiService } from '../services/api.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
     selector: 'app-pages',
@@ -35,6 +36,8 @@ export class PagesComponent {
 
     private _snackBar = inject(MatSnackBar);
 
+    private deviceService = inject(DeviceDetectorService);
+
     public activeMenuLink: String = '';
 
     public selectedRoute: IRoute = {} as IRoute;
@@ -48,6 +51,8 @@ export class PagesComponent {
     private activeUrl: string = '';
 
     public user: any;
+
+    public isOpenSideNav: boolean = false;
 
     public menus = [
         {
@@ -119,6 +124,16 @@ export class PagesComponent {
         });
 
         this.getUserDetails();
+
+        const isMobile = this.deviceService.isMobile();
+        const isTablet = this.deviceService.isTablet();
+        const isDesktopDevice = this.deviceService.isDesktop();
+
+        if(isMobile && isTablet) {
+            this.isOpenSideNav = false;
+        } else if(isDesktopDevice) {
+            this.isOpenSideNav = true;
+        }
     }
 
     public getUserDetails() {

@@ -6,6 +6,7 @@ export interface IRoute {
 }
 
 export interface IIncome {
+    id: number,
     incid: number,
     income_name: String,
     amount: String,
@@ -25,6 +26,7 @@ export interface IIncomeType {
 }
 
 export interface IExepnse {
+    id: number,
     expid: number,
     expense_name: String,
     amount: String,
