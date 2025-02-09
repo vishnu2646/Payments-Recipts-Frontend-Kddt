@@ -9,15 +9,20 @@
         justify-content: center;
         gap: 20px;
     }
-    
+
     .address {
         text-align: center;
 
         p, h3 {
             margin: 0;
         }
+
+        p, h3 {
+            font-size: 14px;
+            line-height: 20px;
+        }
     }
-    
+
     .header {
         display: flex;
         align-items: center;
