@@ -1,5 +1,8 @@
 .voucher-wrapper {
     border: 1px solid var(--black);
+    .title{
+text-transform: uppercase;
+    }
     .heading {
         display: flex;
         align-items: center;
