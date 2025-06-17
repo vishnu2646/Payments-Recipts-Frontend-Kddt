@@ -1,7 +1,10 @@
 <div class="container">
     <div class="header">
         <h2>dashboard</h2>
-        <button mat-raised-button color="accent" (click)="handleGetReportData()">View Report</button>
+        <div class="buttons">
+            <button mat-raised-button color="accent" (click)="handleGetReportData()">View Report</button>
+            <button mat-raised-button color="warn" (click)="openDialog()" style="margin-left: 10px;">Delete All Income & Expense</button>
+        </div>
     </div>
     <div class="tiles">
         <mat-card class="income">
@@ -42,3 +45,11 @@
         </mat-card>
     </div>
 </div>
+
+@if (showDialog) {
+    <app-delete-dialog
+        [title]="'Are you sure you want to delete all income and expense data?'"
+        [message]="'This action cannot be undone. All data will be permanently deleted.'"
+        (confirmed)="handleDialog($event)">
+    </app-delete-dialog>
+}

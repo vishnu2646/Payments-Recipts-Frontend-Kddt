@@ -2,15 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IExepnse, IExpenseType, IIncome, IIncomeType } from '../types/types';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
 
-    //private baseUrl = 'http://127.0.0.1:8000/api/user';
-
-    private baseUrl = 'https://kddt.pythonanywhere.com/api/user';
+    private baseUrl = environment.apiUrl;
 
     private httpClient = inject(HttpClient);
 
@@ -212,5 +211,14 @@ export class ApiService {
             'Authorization': `Bearer ${options.token.access}`
         });
         return this.httpClient.delete(`${this.baseUrl}/openings/delete/${id}/`, { headers });
+    }
+
+    public handleDeleteAllIncomeAndExpenseService(options: any): Observable<any> {
+        const headers = new HttpHeaders({
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${options.token.access}`
+        });
+
+        return this.httpClient.get(`${this.baseUrl}/delete/all/`, { headers });
     }
 }

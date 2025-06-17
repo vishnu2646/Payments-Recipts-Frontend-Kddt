@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
+import { lastValueFrom } from 'rxjs';
+import { DeleteDialogComponent } from "../../components/delete-dialog/delete-dialog.component";
 
 Chart.register(...registerables);
 
@@ -15,7 +17,8 @@ Chart.register(...registerables);
     imports: [
         MatButtonModule,
         MatCardModule,
-        CommonModule
+        CommonModule,
+        DeleteDialogComponent
     ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss'
@@ -40,6 +43,8 @@ export class DashboardComponent implements OnInit {
     public incomeBarData: any;
 
     public expenseBarData: any;
+
+    public showDialog: boolean = false;
 
     public ngOnInit(): void {
         this.getUserDetails();
@@ -185,5 +190,28 @@ export class DashboardComponent implements OnInit {
                 indexAxis: 'y'
             }
         });
+    }
+
+    public openDialog(): void {
+        this.showDialog = true;
+    }
+
+    public handleDialog(confirmed: boolean): void {
+        console.log('Dialog confirmed:', confirmed);
+        if (confirmed) {
+           this.handleDeleteAllIncomeAndExpense();
+        } else {
+            console.log('Cancelled');
+        }
+        this.showDialog = false;
+    }
+
+    private async handleDeleteAllIncomeAndExpense() {
+        try {
+            await lastValueFrom(this.apiService.handleDeleteAllIncomeAndExpenseService(this.user));
+            this.getTilesData();
+        } catch (error) {
+            console.error('Error deleting all income and expense:', error);
+        }
     }
 }
