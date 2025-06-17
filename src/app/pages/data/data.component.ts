@@ -64,6 +64,10 @@ export class DataComponent {
 
     public incomeDataSource: MatTableDataSource<IIncome> = new MatTableDataSource<IIncome>();
 
+    public incomeData: IIncome[] = [];
+
+    public allIncomeData: IIncome[] = [];
+
     public expenseDataSource: MatTableDataSource<IExepnse> = new MatTableDataSource<IExepnse>();
 
     public ngOnInit(): void {
@@ -78,9 +82,12 @@ export class DataComponent {
                 this.selectedType = 'Expense';
                 this.type = 'expense';
                 this.handleGetExpenseData();
+            } else {
+                this.selectedType = 'Income';
+                this.type = 'income';
+                this.handleGetIncomeData();
             }
         });
-        this.handleGetIncomeData();
     }
 
     public getUserDetails() {
@@ -99,7 +106,11 @@ export class DataComponent {
 
     public applyIncomeFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
-        this.incomeDataSource.filter = filterValue.trim().toLowerCase();
+        this.incomeData = this.allIncomeData.filter(income =>
+            Object.values(income).some(val =>
+                val && val.toString().toLowerCase().includes(filterValue)
+            )
+        );
     }
 
     public applyExpenseFilter(event: Event) {
@@ -150,15 +161,14 @@ export class DataComponent {
     private handleGetIncomeData() {
         this.apiService.handleGetIncomeService(this.user).subscribe({
             next: (data: IIncome[]) => {
-                this.incomeDataSource.data = data.sort((a, b) => a.incid - b.incid);
-                this.displayIncomeColumns = Object.keys(data[0]);
-                this.displayIncomeColumns = [...this.displayIncomeColumns, 'Action']
+                const sortedData = data.sort((a, b) => a.incid - b.incid);
+                this.allIncomeData = sortedData;
+                this.incomeData = [...sortedData];
+                this.cd.detectChanges();
+                this.isIncomeLoading = false;
             },
             error: (error) => {
                 console.log(error);
-            },
-            complete: () => {
-
             }
         });
     }
@@ -172,13 +182,10 @@ export class DataComponent {
             },
             error: (error) => {
                 console.log(error);
-            },
-            complete: () => {
-
             }
         });
     }
-    
+
     private openSnackBar(message: string) {
         this._snackBar.open(message, 'X', {
             horizontalPosition: 'end',
