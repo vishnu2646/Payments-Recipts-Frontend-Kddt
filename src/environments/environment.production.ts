@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://kdda.pythonanywhere.com/api/user',
+    apiUrl: 'https://kddt.pythonanywhere.com/api/user',
 };
