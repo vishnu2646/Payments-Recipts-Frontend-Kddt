@@ -44,13 +44,13 @@
                                 <td [routerLink]="['/receipt', row.incid]" style="cursor: pointer;">{{ row.incid }}</td>
                                 <td (click)="handleRouteUpdateIncome(row)">{{ row.income_name }}</td>
                                 <td>{{ row.amount }}</td>
-                                <td>{{ row.date }}</td>
+                                <td>{{ row.date.toString() | date: 'dd/MM/yyyy' }}</td>
                                 <td>{{ row.mode }}</td>
                                 <td>{{ row.income_by }}</td>
                                 <td>{{ row.details }}</td>
                                 <td>{{ row.bankname }}</td>
                                 <td>{{ row.chequeordd }}</td>
-                                <td>{{ row.dateinbank }}</td>
+                                <td>{{ row.dateinbank.toString() | date: 'dd/MM/yyyy' }}</td>
                                 <td>
                                     <mat-icon color="danger" (click)="handleDeleteIncome(row)">delete</mat-icon>
                                 </td>
